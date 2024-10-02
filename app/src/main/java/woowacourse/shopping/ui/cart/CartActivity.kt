@@ -3,23 +3,26 @@ package woowacourse.shopping.ui.cart
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
+import org.koin.android.ext.android.inject
+import org.koin.android.scope.AndroidScopeComponent
+import org.koin.androidx.scope.activityRetainedScope
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.scope.Scope
 import woowacourse.shopping.R
 import woowacourse.shopping.databinding.ActivityCartBinding
 
-class CartActivity : AppCompatActivity() {
+class CartActivity : AppCompatActivity(), AndroidScopeComponent {
+    override val scope: Scope by activityRetainedScope()
+
     private val binding by lazy { ActivityCartBinding.inflate(layoutInflater) }
 
-    private val viewModel by lazy {
-        ViewModelProvider(this)[CartViewModel::class.java]
-    }
+    private val viewModel: CartViewModel by viewModel()
 
-    private lateinit var dateFormatter: DateFormatter
+    private val dateFormatter: DateFormatter by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setupDateFormatter()
         setupBinding()
         setupToolbar()
         setupView()
@@ -28,10 +31,6 @@ class CartActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         finish()
         return true
-    }
-
-    private fun setupDateFormatter() {
-        dateFormatter = DateFormatter(this)
     }
 
     private fun setupToolbar() {
