@@ -1,8 +1,9 @@
 package woowacourse.shopping.data
 
 import woowacourse.shopping.model.Product
+import javax.inject.Inject
 
-class DefaultProductRepository : ProductRepository {
+class DefaultProductRepository @Inject constructor() : ProductRepository {
     private val products: List<Product> =
         listOf(
             Product(
