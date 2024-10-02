@@ -15,6 +15,9 @@ import org.koin.test.junit5.mock.MockProviderExtension
 import org.koin.test.mock.declareMock
 import kotlin.test.Test
 
+/**
+ * ref: https://insert-koin.io/docs/reference/koin-test/testing
+ * */
 class MyTest : KoinTest {
     class ComponentA {
         fun hello() = "Hello Koin"

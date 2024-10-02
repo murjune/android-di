@@ -52,6 +52,7 @@ android {
 }
 
 dependencies {
+    implementation("androidx.test:runner:1.6.2")
     // koin
     val koin = "4.0.0"
     implementation(platform("io.insert-koin:koin-bom:$koin"))
@@ -88,9 +89,6 @@ dependencies {
     testRuntimeOnly("org.junit.vintage:junit-vintage-engine:5.8.2")
     testImplementation("io.kotest:kotest-runner-junit5:5.8.0")
     testImplementation("de.mannodermaus.junit5:android-test-runner:1.4.0")
-    // android test
-    androidTestImplementation("androidx.test.ext:junit:1.2.1")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
 }
 
 kapt {

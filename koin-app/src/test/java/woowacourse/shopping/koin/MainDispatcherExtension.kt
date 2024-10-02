@@ -1,4 +1,4 @@
-package woowacourse.shopping
+package woowacourse.shopping.koin
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
