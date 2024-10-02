@@ -1,9 +1,8 @@
 package woowacourse.shopping.koin.data
 
 import woowacourse.shopping.koin.model.Product
-import javax.inject.Inject
 
-class ProductRepositoryImpl @Inject constructor() : ProductRepository {
+class ProductRepositoryImpl : ProductRepository {
     fun dummyProducts() =
         listOf(
             Product(

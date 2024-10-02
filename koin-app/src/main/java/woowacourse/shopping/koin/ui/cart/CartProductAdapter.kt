@@ -1,10 +1,8 @@
-package woowacourse.shopping.hilt.ui.cart
+package woowacourse.shopping.koin.ui.cart
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import woowacourse.shopping.koin.model.Product
-import woowacourse.shopping.koin.ui.cart.CartProductViewHolder
-import woowacourse.shopping.koin.ui.cart.DateFormatter
 import woowacourse.shopping.koin.utils.ItemDiffCallback
 
 class CartProductAdapter(

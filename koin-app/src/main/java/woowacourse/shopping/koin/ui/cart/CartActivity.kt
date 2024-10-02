@@ -2,25 +2,20 @@ package woowacourse.shopping.koin.ui.cart
 
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import woowacourse.shopping.hilt.R
-import woowacourse.shopping.hilt.databinding.ActivityCartBinding
-import woowacourse.shopping.hilt.ui.cart.CartProductAdapter
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import woowacourse.shopping.koin.R
+import woowacourse.shopping.koin.databinding.ActivityCartBinding
 
-@AndroidEntryPoint
 class CartActivity : AppCompatActivity() {
     private val binding by lazy { ActivityCartBinding.inflate(layoutInflater) }
-    private val viewModel by viewModels<CartViewModel>()
-
-    @Inject
-    lateinit var dateFormatter: DateFormatter
+    private val viewModel by viewModel<CartViewModel>()
+    val dateFormatter by inject<DateFormatter>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

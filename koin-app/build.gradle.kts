@@ -3,15 +3,14 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
     id("de.mannodermaus.android-junit5") version "1.10.0.0"
-    id("com.google.dagger.hilt.android")
 }
 
 android {
-    namespace = "woowacourse.shopping.hilt"
+    namespace = "woowacourse.shopping.koin"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "woowacourse.shopping.hilt"
+        applicationId = "woowacourse.shopping.koin"
         minSdk = 26
         targetSdk = 34
         versionCode = 1
@@ -55,14 +54,8 @@ android {
 dependencies {
     // koin
     val koin = "4.0.0"
-    implementation("io.insert-koin:koin-bom:$koin")
-    implementation("io.insert-koin:koin-android:$koin")
-    // hilt
-    val hilt = "2.50"
-    implementation("com.google.dagger:hilt-android:$hilt")
-    kapt("com.google.dagger:hilt-android-compiler:$hilt")
-    testImplementation("com.google.dagger:hilt-android-testing:$hilt")
-    testImplementation("com.google.dagger:hilt-android-compiler:$hilt")
+    implementation(platform("io.insert-koin:koin-bom:$koin"))
+    implementation("io.insert-koin:koin-android")
     // android
     implementation("androidx.core:core-ktx:1.13.1")
     implementation("androidx.appcompat:appcompat:1.7.0")

@@ -2,9 +2,8 @@ package woowacourse.shopping.koin.data
 
 import woowacourse.shopping.koin.data.mapper.toEntity
 import woowacourse.shopping.koin.model.Product
-import javax.inject.Inject
 
-class DefaultCartRepository @Inject constructor(
+class DefaultCartRepository(
     private val dao: CartProductDao,
 ) : CartRepository {
     override suspend fun addCartProduct(product: Product) {

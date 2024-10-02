@@ -4,21 +4,19 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import woowacourse.shopping.hilt.R
-import woowacourse.shopping.hilt.databinding.ActivityMainBinding
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import woowacourse.shopping.koin.R
+import woowacourse.shopping.koin.databinding.ActivityMainBinding
 import woowacourse.shopping.koin.ui.cart.CartActivity
 
-@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
-    private val viewModel by viewModels<MainViewModel>()
+    private val viewModel by viewModel<MainViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
