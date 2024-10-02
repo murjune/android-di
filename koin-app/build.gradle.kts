@@ -53,6 +53,10 @@ android {
 }
 
 dependencies {
+    // koin
+    val koin = "4.0.0"
+    implementation("io.insert-koin:koin-bom:$koin")
+    implementation("io.insert-koin:koin-android:$koin")
     // hilt
     val hilt = "2.50"
     implementation("com.google.dagger:hilt-android:$hilt")
