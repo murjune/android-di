@@ -1,4 +1,4 @@
-package woowacourse.shopping.koin
+package woowacourse.shopping.koin.rule
 
 import androidx.test.platform.app.InstrumentationRegistry
 import org.junit.rules.TestWatcher

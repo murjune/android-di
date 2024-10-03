@@ -12,6 +12,7 @@ import org.koin.androidx.viewmodel.ext.android.getViewModel
 import org.koin.dsl.module
 import woowacourse.shopping.koin.data.CartRepository
 import woowacourse.shopping.koin.data.ProductRepository
+import woowacourse.shopping.koin.rule.KoinAndroidUnitTestRule
 import woowacourse.shopping.koin.stub.StubCartRepository
 import woowacourse.shopping.koin.stub.StubProductRepository
 import woowacourse.shopping.koin.ui.MainActivity

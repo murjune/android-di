@@ -11,18 +11,23 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.koin.androidx.viewmodel.ext.android.getViewModel
+import org.koin.core.parameter.parametersOf
 import org.koin.dsl.module
+import org.koin.test.KoinTest
+import org.koin.test.get
 import woowacourse.shopping.koin.data.CartRepository
+import woowacourse.shopping.koin.rule.KoinAndroidUnitTestRule
 import woowacourse.shopping.koin.stub.StubCartRepository
 import woowacourse.shopping.koin.ui.cart.CartActivity
 import woowacourse.shopping.koin.ui.cart.CartViewModel
+import woowacourse.shopping.koin.ui.cart.DateFormatter
 
 
 /**
  * ref: https://insert-koin.io/docs/reference/koin-android/instrumented-testing/
  * */
 @RunWith(AndroidJUnit4::class)
-class CartActivityTest {
+class CartActivityTest : KoinTest {
     @get:Rule
     val scenarioRule = activityScenarioRule<CartActivity>()
     private val scenario get() = scenarioRule.scenario
@@ -79,6 +84,14 @@ class CartActivityTest {
         // then
         scenario.onActivity {
             it.getViewModel<CartViewModel>() shouldNotBe preViewModel
+        }
+    }
+
+    @Test
+    fun `DateFormatter 주입 테스트`() {
+        // given
+        scenario.onActivity { activity ->
+            get<DateFormatter> { parametersOf(activity) }.shouldNotBeNull()
         }
     }
 }
