@@ -1,20 +1,39 @@
 package woowacourse.shopping.data
 
+import woowacourse.shopping.data.mapper.toDomain
+import woowacourse.shopping.data.mapper.toEntity
+import woowacourse.shopping.model.CartProduct
 import woowacourse.shopping.model.Product
+import woowacourse.shopping.model.toCart
 
-// TODO: Step2 - CartProductDao를 참조하도록 변경
-class CartRepository {
+interface CartRepository {
+    suspend fun addCartProduct(product: Product)
 
-    private val cartProducts: MutableList<Product> = mutableListOf()
-    fun addCartProduct(product: Product) {
-        cartProducts.add(product)
+    suspend fun getAllCartProducts(): List<CartProduct>
+
+    suspend fun deleteCartProduct(id: Long)
+}
+
+class DataBaseCartRepository(
+    private val cartProductDao: CartProductDao,
+) : CartRepository {
+    override suspend fun addCartProduct(product: Product) = cartProductDao.insert(product.toEntity())
+
+    override suspend fun getAllCartProducts(): List<CartProduct> = cartProductDao.getAll().map { it.toDomain() }
+
+    override suspend fun deleteCartProduct(id: Long) = cartProductDao.delete(id)
+}
+
+class InMemoryCartRepository : CartRepository {
+    private val cartProducts: MutableList<CartProduct> = mutableListOf()
+
+    override suspend fun addCartProduct(product: Product) {
+        cartProducts.add(product.toCart(cartProducts.size.toLong()))
     }
 
-    fun getAllCartProducts(): List<Product> {
-        return cartProducts.toList()
-    }
+    override suspend fun getAllCartProducts(): List<CartProduct> = cartProducts
 
-    fun deleteCartProduct(id: Int) {
-        cartProducts.removeAt(id)
+    override suspend fun deleteCartProduct(id: Long) {
+        cartProducts.removeIf { it.id == id }
     }
 }
