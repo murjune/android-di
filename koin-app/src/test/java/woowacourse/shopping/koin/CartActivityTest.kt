@@ -94,4 +94,19 @@ class CartActivityTest : KoinTest {
             get<DateFormatter> { parametersOf(activity) }.shouldNotBeNull()
         }
     }
+
+    @Test
+    fun `DateFormatter 는 ConfigureChange 시 액티비티가 파괴될시 파괴된다`() {
+        // given
+        var dateFormatter: DateFormatter? = null
+        scenario.onActivity { activity ->
+            dateFormatter = get<DateFormatter> { parametersOf(activity) }
+        }
+        // when : 파괴 후 재생성
+        scenario.recreate()
+        // then
+        scenario.onActivity { activity ->
+            get<DateFormatter> { parametersOf(activity) } shouldNotBe dateFormatter
+        }
+    }
 }
