@@ -23,8 +23,6 @@ import woowacourse.shopping.koin.stub.StubCartRepository
 import woowacourse.shopping.koin.ui.cart.CartActivity
 import woowacourse.shopping.koin.ui.cart.CartViewModel
 import woowacourse.shopping.koin.ui.cart.DateFormatter
-import woowacourse.shopping.koin.utils.addLogger
-
 
 /**
  * ref: https://insert-koin.io/docs/reference/koin-android/instrumented-testing/
@@ -79,16 +77,16 @@ class CartActivityTest : KoinTest {
 
     @Test
     fun `Destroy 시 ViewModel 파괴 테스트`() {
-        var scenario = launchActivity<CartActivity>().addLogger()
         var preViewModel: CartViewModel? = null
         scenario.onActivity {
             preViewModel = it.getViewModel()
         }
-        // configuration change
+        // Activity destroy
         scenario.moveToState(Lifecycle.State.DESTROYED)
-        scenario = launchActivity()
+        scenario.close()
+        val newScenario = launchActivity<CartActivity>()
         // then
-        scenario.onActivity {
+        newScenario.onActivity {
             it.getViewModel<CartViewModel>() shouldNotBe preViewModel
         }
     }
@@ -123,6 +121,49 @@ class CartActivityTest : KoinTest {
         // then
         scenario.onActivity { activity ->
             activity.get<DateFormatter> { parametersOf(activity) } shouldBe dateFormatter
+        }
+    }
+
+    @Test
+    fun `CartRepository 주입 테스트`() {
+        scenario.onActivity { activity ->
+            val viewModel = activity.getViewModel<CartViewModel>()
+            viewModel.scope.get<CartRepository>().shouldNotBeNull()
+        }
+    }
+
+    @Test
+    fun `Activity 파괴 시 CartRepository 도 파괴된다`() {
+        var cartRepository: CartRepository? = null
+        scenario.onActivity { activity ->
+            val viewModel = activity.getViewModel<CartViewModel>()
+            cartRepository = viewModel.scope.get()
+        }
+        // when : 파괴
+        scenario.moveToState(Lifecycle.State.DESTROYED)
+        scenario.close()
+        val newScenario = launchActivity<CartActivity>()
+        // then
+        newScenario.onActivity { activity ->
+            val viewModel = activity.getViewModel<CartViewModel>()
+            viewModel.scope.get<CartRepository>() shouldNotBe cartRepository
+        }
+    }
+
+    @Test
+    fun `CartRepository 는 ConfigureChange 에도 동일한 인스턴스 주입받는다`() {
+        // given
+        var cartRepository: CartRepository? = null
+        scenario.onActivity { activity ->
+            val viewModel = activity.getViewModel<CartViewModel>()
+            cartRepository = viewModel.scope.get()
+        }
+        // when : 파괴 후 재생성
+        scenario.recreate()
+        // then
+        scenario.onActivity { activity ->
+            val viewModel = activity.getViewModel<CartViewModel>()
+            viewModel.scope.get<CartRepository>() shouldBe cartRepository
         }
     }
 }
