@@ -16,7 +16,7 @@ import woowacourse.shopping.koin.databinding.ActivityCartBinding
 class CartActivity : RetainedScopeActivity() {
     private val binding by lazy { ActivityCartBinding.inflate(layoutInflater) }
     private val viewModel by viewModel<CartViewModel>()
-    private val dateFormatter by inject<DateFormatter>() { parametersOf(this) }
+    private val dateFormatter by inject<DateFormatter> { parametersOf(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

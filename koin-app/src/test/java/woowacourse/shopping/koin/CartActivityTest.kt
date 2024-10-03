@@ -12,16 +12,18 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.koin.android.ext.android.get
 import org.koin.androidx.viewmodel.ext.android.getViewModel
+import org.koin.core.module.dsl.scopedOf
 import org.koin.core.parameter.parametersOf
+import org.koin.dsl.bind
 import org.koin.dsl.module
 import org.koin.test.KoinTest
-import org.koin.test.get
 import woowacourse.shopping.koin.data.CartRepository
 import woowacourse.shopping.koin.rule.KoinAndroidUnitTestRule
 import woowacourse.shopping.koin.stub.StubCartRepository
 import woowacourse.shopping.koin.ui.cart.CartActivity
 import woowacourse.shopping.koin.ui.cart.CartViewModel
 import woowacourse.shopping.koin.ui.cart.DateFormatter
+import woowacourse.shopping.koin.utils.addLogger
 
 
 /**
@@ -34,7 +36,9 @@ class CartActivityTest : KoinTest {
     private val scenario get() = scenarioRule.scenario
 
     private val instrumentedTestModule = module {
-        factory<CartRepository> { StubCartRepository() }
+        scope<CartViewModel> {
+            scopedOf(::StubCartRepository).bind<CartRepository>()
+        }
     }
 
     @get:Rule
@@ -72,9 +76,10 @@ class CartActivityTest : KoinTest {
         }
     }
 
+
     @Test
     fun `Destroy 시 ViewModel 파괴 테스트`() {
-        var scenario = launchActivity<CartActivity>()
+        var scenario = launchActivity<CartActivity>().addLogger()
         var preViewModel: CartViewModel? = null
         scenario.onActivity {
             preViewModel = it.getViewModel()
@@ -92,7 +97,7 @@ class CartActivityTest : KoinTest {
     fun `DateFormatter 주입 테스트`() {
         // given
         scenario.onActivity { activity ->
-            get<DateFormatter> { parametersOf(activity) }.shouldNotBeNull()
+            activity.get<DateFormatter> { parametersOf(activity) }.shouldNotBeNull()
         }
     }
 

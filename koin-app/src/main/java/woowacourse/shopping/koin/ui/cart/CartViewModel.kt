@@ -2,18 +2,18 @@ package woowacourse.shopping.koin.ui.cart
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import org.koin.androidx.scope.ScopeViewModel
 import woowacourse.shopping.koin.data.CartRepository
 import woowacourse.shopping.koin.model.Product
 
-class CartViewModel(
-    private val cartRepository: CartRepository,
-) : ViewModel() {
+class CartViewModel : ScopeViewModel() {
+
+    private val cartRepository by scope.inject<CartRepository>()
     private val _cartProducts: MutableStateFlow<List<Product>> = MutableStateFlow(emptyList())
     val cartProducts: StateFlow<List<Product>> = _cartProducts.asStateFlow()
 
