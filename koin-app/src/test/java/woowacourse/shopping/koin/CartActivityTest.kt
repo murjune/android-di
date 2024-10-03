@@ -10,6 +10,7 @@ import io.kotest.matchers.shouldNotBe
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.koin.android.ext.android.get
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 import org.koin.core.parameter.parametersOf
 import org.koin.dsl.module
@@ -86,7 +87,7 @@ class CartActivityTest : KoinTest {
             it.getViewModel<CartViewModel>() shouldNotBe preViewModel
         }
     }
-
+    
     @Test
     fun `DateFormatter 주입 테스트`() {
         // given
@@ -96,17 +97,27 @@ class CartActivityTest : KoinTest {
     }
 
     @Test
+    fun `DateFormatter 는 액티비티 생명주기 동안 동일한 인스턴스 주입받는다`() {
+        // given
+        scenario.onActivity { activity ->
+            val dateFormatter = activity.get<DateFormatter> { parametersOf(activity) }
+            val dateFormatter2 = activity.get<DateFormatter> { parametersOf(activity) }
+            dateFormatter shouldBe dateFormatter2
+        }
+    }
+
+    @Test
     fun `DateFormatter 는 ConfigureChange 시 액티비티가 파괴될시 파괴된다`() {
         // given
         var dateFormatter: DateFormatter? = null
         scenario.onActivity { activity ->
-            dateFormatter = get<DateFormatter> { parametersOf(activity) }
+            dateFormatter = activity.get<DateFormatter> { parametersOf(activity) }
         }
         // when : 파괴 후 재생성
         scenario.recreate()
         // then
         scenario.onActivity { activity ->
-            get<DateFormatter> { parametersOf(activity) } shouldNotBe dateFormatter
+            activity.get<DateFormatter> { parametersOf(activity) } shouldNotBe dateFormatter
         }
     }
 }
