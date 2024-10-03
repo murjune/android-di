@@ -7,13 +7,13 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
-import org.koin.androidx.scope.ScopeActivity
+import org.koin.androidx.scope.RetainedScopeActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import woowacourse.shopping.koin.R
 import woowacourse.shopping.koin.databinding.ActivityCartBinding
 
-class CartActivity : ScopeActivity() {
+class CartActivity : RetainedScopeActivity() {
     private val binding by lazy { ActivityCartBinding.inflate(layoutInflater) }
     private val viewModel by viewModel<CartViewModel>()
     private val dateFormatter by inject<DateFormatter>() { parametersOf(this) }

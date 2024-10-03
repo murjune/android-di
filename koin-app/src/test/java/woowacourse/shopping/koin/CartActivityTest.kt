@@ -87,7 +87,7 @@ class CartActivityTest : KoinTest {
             it.getViewModel<CartViewModel>() shouldNotBe preViewModel
         }
     }
-    
+
     @Test
     fun `DateFormatter 주입 테스트`() {
         // given
@@ -107,7 +107,7 @@ class CartActivityTest : KoinTest {
     }
 
     @Test
-    fun `DateFormatter 는 ConfigureChange 시 액티비티가 파괴될시 파괴된다`() {
+    fun `DateFormatter 는 ConfigureChange 에도 동일한 인스턴스 주입받는다`() {
         // given
         var dateFormatter: DateFormatter? = null
         scenario.onActivity { activity ->
@@ -117,7 +117,7 @@ class CartActivityTest : KoinTest {
         scenario.recreate()
         // then
         scenario.onActivity { activity ->
-            activity.get<DateFormatter> { parametersOf(activity) } shouldNotBe dateFormatter
+            activity.get<DateFormatter> { parametersOf(activity) } shouldBe dateFormatter
         }
     }
 }
