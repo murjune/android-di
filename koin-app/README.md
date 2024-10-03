@@ -31,6 +31,7 @@
 단점)
 - 이게 가장 큰 단점 - 런타임에 DI가 동작하기 때문에 실수하면 앱이 죽는다 -> Test 코드가 진짜 필수 일듯
 - 좀 심화된 내용은 한국 Reference 가 거의 없었다
+- 같은 Activity 만드려면 각 Activity 마다 ScopeID 를 다르게 해줘야함 (이게 진짜 불편함...)
 - Scope Component 가 진짜 짜증난다 🔥
   좀 더 딥하게 얘기하자면, ViewModel 의 생명주기를 따르는 레포지토리를 만들고, Activity 에서 by ViewModel() 에 넘겨주고 싶었는데 불가능함
   ViewModel 내부에 서비스 로케이터 패턴으로 레포지토리를 가져오는 방식으로 해결해야함 😨
