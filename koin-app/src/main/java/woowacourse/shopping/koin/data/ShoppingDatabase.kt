@@ -1,4 +1,4 @@
-package woowacourse.shopping.hilt.data
+package woowacourse.shopping.koin.data
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
