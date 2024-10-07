@@ -78,4 +78,6 @@ dependencies {
     testImplementation("org.robolectric:robolectric:4.13")
     // Di
     implementation(project(":di"))
+    // Koin
+    implementation("io.insert-koin:koin-android:4.0.0")
 }
