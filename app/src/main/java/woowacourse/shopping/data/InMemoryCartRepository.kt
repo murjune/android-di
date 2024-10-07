@@ -2,8 +2,9 @@ package woowacourse.shopping.data
 
 import woowacourse.shopping.data.mapper.toEntity
 import woowacourse.shopping.model.Product
+import javax.inject.Inject
 
-class InMemoryCartRepository : CartRepository {
+class InMemoryCartRepository @Inject constructor() : CartRepository {
     private val cartProducts = mutableListOf<CartProductEntity>()
 
     override suspend fun addCartProduct(product: Product) {
