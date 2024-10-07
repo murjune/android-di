@@ -22,17 +22,19 @@ val databaseModule =
         single<CartProductDao> { get<ShoppingDatabase>().cartProductDao() }
     }
 
-val repositoryModule = module {
-    single { ShoppingDatabase.instance(androidContext()).cartProductDao() }
+val repositoryModule =
+    module {
+        single { ShoppingDatabase.instance(androidContext()).cartProductDao() }
 
-    single<CartRepository> { DefaultCartRepository(get()) }
-    single<CartRepository> { InMemoryCartRepository() }
-    single<ProductRepository> { DefaultProductRepository() }
+        single<CartRepository> { DefaultCartRepository(get()) }
+        single<CartRepository> { InMemoryCartRepository() }
+        single<ProductRepository> { DefaultProductRepository() }
 
-    viewModel { CartViewModel(get()) }
-    viewModel { MainViewModel(get(), get()) }
-}
+        viewModel { CartViewModel(get()) }
+        viewModel { MainViewModel(get(), get()) }
+    }
 
-val dateFormatterModule = module {
-    scope<CartActivity> { scopedOf(::DateFormatter) }
-}
+val dateFormatterModule =
+    module {
+        scope<CartActivity> { scopedOf(::DateFormatter) }
+    }
